@@ -1,20 +1,36 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Homepage() {
   const [password, setPassword] = useState<string>("");
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
-
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
+  const navigator = useNavigate();
   const thePassword = "20082024";
+
+  const SubmitHandler = () => {
+    if (password === thePassword) {
+      navigator("/home");
+    }
+  };
 
   useEffect(() => {
     setPassword("");
+  }, []);
 
+  useEffect(() => {
     if (password.length > 0) {
       setIsEmpty(false);
     } else {
       setIsEmpty(true);
     }
-  }, []);
+
+    if (password.length === 8) {
+      setCanSubmit(true);
+    } else {
+      setCanSubmit(false);
+    }
+  }, [password]);
 
   return (
     <>
@@ -33,7 +49,7 @@ export default function Homepage() {
           </div>
         </div>
         <div className="grid grid-cols-3 grid-rows-3 gap-3 justify-center items-center">
-          <div
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "1");
@@ -41,8 +57,8 @@ export default function Homepage() {
             }}
           >
             1
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "2");
@@ -50,8 +66,8 @@ export default function Homepage() {
             }}
           >
             2
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "3");
@@ -59,8 +75,8 @@ export default function Homepage() {
             }}
           >
             3
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "4");
@@ -68,8 +84,8 @@ export default function Homepage() {
             }}
           >
             4
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "5");
@@ -77,8 +93,8 @@ export default function Homepage() {
             }}
           >
             5
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "6");
@@ -86,8 +102,8 @@ export default function Homepage() {
             }}
           >
             6
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "7");
@@ -95,8 +111,8 @@ export default function Homepage() {
             }}
           >
             7
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "8");
@@ -104,8 +120,8 @@ export default function Homepage() {
             }}
           >
             8
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "9");
@@ -113,8 +129,9 @@ export default function Homepage() {
             }}
           >
             9
-          </div>
-          <div
+          </button>
+          <button
+            className={`${isEmpty ? `` : `bg-red-500`}`}
             onClick={() => {
               if (password.length > 0) {
                 setPassword("");
@@ -122,8 +139,8 @@ export default function Homepage() {
             }}
           >
             AC
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               if (password.length < 8) {
                 setPassword(password + "0");
@@ -131,8 +148,9 @@ export default function Homepage() {
             }}
           >
             0
-          </div>
-          <div
+          </button>
+          <button
+            className={`${isEmpty ? `` : `bg-red-500`}`}
             onClick={() => {
               if (password.length > 0) {
                 setPassword(password.slice(0, -1));
@@ -140,7 +158,17 @@ export default function Homepage() {
             }}
           >
             Del
-          </div>
+          </button>
+        </div>
+        <div className="justify-center items-center flex">
+          <button
+            className={`${canSubmit ? `bg-emerald-700` : `bg-blue-500`}`}
+            onClick={() => {
+              SubmitHandler();
+            }}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </>
